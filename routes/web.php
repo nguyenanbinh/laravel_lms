@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\InstructorController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\ProfileController;
@@ -32,11 +33,21 @@ Route::middleware(['auth', 'roles:admin'])->group(function () {
 
     Route::get('/admin/change/password', [AdminController::class, 'changePassword'])->name('admin.change.password');
     Route::post('/admin/password/update', [AdminController::class, 'updatePassword'])->name('admin.password.update');
+
+    // Category All Route
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/categories', 'index')->name('categories.index');
+        Route::get('/categories/create', 'create')->name('categories.create');
+        Route::post('/categories/store', 'store')->name('categories.store');
+        Route::get('/categories/{id}/edit', 'edit')->name('categories.edit');
+        Route::post('/categories/update', 'update')->name('categories.update');
+        Route::get('/categories//{id}/delete','delete')->name('categories.delete');
+    });
 });
 
 Route::get('/instructor/login', [InstructorController::class, 'login'])->name('instructor.login');
 ///// Instructor Group Middleware
-Route::middleware(['auth','roles:instructor'])->group(function(){
+Route::middleware(['auth', 'roles:instructor'])->group(function () {
     Route::get('/instructor/logout', [InstructorController::class, 'logout'])->name('instructor.logout');
 
     Route::get('/instructor/dashboard', [InstructorController::class, 'dashboard'])->name('instructor.dashboard');
