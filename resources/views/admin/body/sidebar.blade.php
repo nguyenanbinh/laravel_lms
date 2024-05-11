@@ -11,7 +11,7 @@
      </div>
     <!--navigation-->
     <ul class="metismenu" id="menu">
-        
+
         <li>
             <a href="{{ route('admin.dashboard') }}">
                 <div class="parent-icon"><i class='bx bx-home-alt'></i>
@@ -19,11 +19,11 @@
                 <div class="menu-title">Dashboard</div>
             </a>
         </li>
-        
-      
-        
+
+
+
         <li class="menu-label">UI Elements</li>
-       
+
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-cart'></i>
@@ -31,11 +31,11 @@
                 <div class="menu-title">eCommerce</div>
             </a>
             <ul>
-                <li> <a href="ecommerce-products.html"><i class='bx bx-radio-circle'></i>Products</a>
+                <li> <a href="{{ route('categories.index') }}"><i class='bx bx-radio-circle'></i>All Category </a>
                 </li>
-                <li> <a href="ecommerce-products-details.html"><i class='bx bx-radio-circle'></i>Product Details</a>
+                <li> <a href="ecommerce-products-details.html"><i class='bx bx-radio-circle'></i>Add Category </a>
                 </li>
-                
+
             </ul>
         </li>
         <li>
@@ -49,11 +49,11 @@
                 </li>
                 <li> <a href="component-accordions.html"><i class='bx bx-radio-circle'></i>Accordions</a>
                 </li>
-               
+
             </ul>
         </li>
-      
-     
+
+
         <li class="menu-label">Charts & Maps</li>
         <li>
             <a class="has-arrow" href="javascript:;">
@@ -83,7 +83,7 @@
                 </li>
             </ul>
         </li>
-        
+
         <li>
             <a href="https://themeforest.net/user/codervent" target="_blank">
                 <div class="parent-icon"><i class="bx bx-support"></i>
