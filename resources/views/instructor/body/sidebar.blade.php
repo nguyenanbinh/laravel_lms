@@ -1,3 +1,9 @@
+@php
+  $id = Auth::user()->id;
+  $instructorId = App\Models\User::find($id);
+  $status = $instructorId->status;
+@endphp
+
 <div class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
         <div>
@@ -11,7 +17,7 @@
      </div>
     <!--navigation-->
     <ul class="metismenu" id="menu">
-        
+
         <li>
             <a href="{{ route('admin.dashboard') }}">
                 <div class="parent-icon"><i class='bx bx-home-alt'></i>
@@ -19,11 +25,11 @@
                 <div class="menu-title">Dashboard</div>
             </a>
         </li>
-        
-      
-        
+
+
+        @if ($status === '1')
         <li class="menu-label">UI Elements</li>
-       
+
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-cart'></i>
@@ -35,7 +41,7 @@
                 </li>
                 <li> <a href="ecommerce-products-details.html"><i class='bx bx-radio-circle'></i>Product Details</a>
                 </li>
-                
+
             </ul>
         </li>
         <li>
@@ -49,11 +55,11 @@
                 </li>
                 <li> <a href="component-accordions.html"><i class='bx bx-radio-circle'></i>Accordions</a>
                 </li>
-               
+
             </ul>
         </li>
-      
-     
+
+
         <li class="menu-label">Charts & Maps</li>
         <li>
             <a class="has-arrow" href="javascript:;">
@@ -83,7 +89,9 @@
                 </li>
             </ul>
         </li>
-        
+        @else
+
+        @endif
         <li>
             <a href="https://themeforest.net/user/codervent" target="_blank">
                 <div class="parent-icon"><i class="bx bx-support"></i>

@@ -50,9 +50,18 @@ Route::middleware(['auth', 'roles:admin'])->group(function () {
         Route::post('subcategories/update','updateSubCategory')->name('subcategories.update');
         Route::get('subcategories/{id}/delete','deleteSubCategory')->name('subcategories.delete');
     });
+
+    // Instructor All Route
+    Route::controller(AdminController::class)->group(function(){
+        Route::get('instructors','getInstructors')->name('instructor.index');
+        Route::post('/update/user/status','updateUserStatus')->name('update.user.status');
+    });
 });
 
 Route::get('/instructor/login', [InstructorController::class, 'login'])->name('instructor.login');
+Route::get('/become/instructor', [AdminController::class, 'becomeInstructor'])->name('instructor.become');
+Route::post('/instructor/register', [AdminController::class, 'registerInstructor'])->name('instructor.register');
+
 ///// Instructor Group Middleware
 Route::middleware(['auth', 'roles:instructor'])->group(function () {
     Route::get('/instructor/logout', [InstructorController::class, 'logout'])->name('instructor.logout');
