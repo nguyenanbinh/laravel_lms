@@ -42,6 +42,13 @@ Route::middleware(['auth', 'roles:admin'])->group(function () {
         Route::get('/categories/{id}/edit', 'edit')->name('categories.edit');
         Route::post('/categories/update', 'update')->name('categories.update');
         Route::get('/categories//{id}/delete','delete')->name('categories.delete');
+        // Subcategory
+        Route::get('subcategories','allSubCategory')->name('subcategories.index');
+        Route::get('subcategories/create','createSubCategory')->name('subcategories.create');
+        Route::post('subcategories/store','storeSubCategory')->name('subcategories.store');
+        Route::get('subcategories/{id}/edit','editSubCategory')->name('subcategories.edit');
+        Route::post('subcategories/update','updateSubCategory')->name('subcategories.update');
+        Route::get('subcategories/{id}/delete','deleteSubCategory')->name('subcategories.delete');
     });
 });
 
