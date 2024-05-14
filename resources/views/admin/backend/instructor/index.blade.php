@@ -72,4 +72,29 @@
     </div>
 </div>
 
+@push('script')
+<script>
+    $(document).ready(function(){
+        $('.status-toggle').on('change', function(){
+            var userId = $(this).data('user-id');
+            var isChecked = $(this).is(':checked');
+            // send an ajax request to update status
+            $.ajax({
+                url: "{{ route('update.user.status') }}",
+                method: "POST",
+                data: {
+                    user_id : userId,
+                    is_checked: isChecked ? 1 : 0,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response){
+                    toastr.success(response.message);
+                },
+                error: function(){
+                }
+            });
+        });
+    });
+</script>
+@endpush
 @endsection

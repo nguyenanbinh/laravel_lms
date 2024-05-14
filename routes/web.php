@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\Backend\InstructorController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\ProfileController;
@@ -71,4 +72,18 @@ Route::middleware(['auth', 'roles:instructor'])->group(function () {
     Route::post('/instructor/profile/store', [InstructorController::class, 'profileUpdate'])->name('instructor.profile.store');
     Route::get('/instructor/change/password', [InstructorController::class, 'changePassword'])->name('instructor.change.password');
     Route::post('/instructor/password/update', [InstructorController::class, 'updatePassword'])->name('instructor.password.update');
+
+    // Instructor All Route
+Route::controller(CourseController::class)->group(function(){
+    Route::get('instructor/courses', 'index')->name('instructor.courses.index');
+    Route::get('instructor/courses/create', 'create')->name('instructor.courses.create');
+    Route::get('subcategory/ajax/{category_id}','getSubCategory');
+    Route::post('instructor/course/store','store')->name('instructor.courses.store');
+    Route::get('instructor/course/{id}/edit','edit')->name('instructor.courses.edit');
+    Route::post('instructor/course/update','update')->name('instructor.courses.update');
+    Route::post('instructor/course/image/update','updateCourseImage')->name('instructor.courses.image.update');
+    Route::post('instructor/course/video/update','updateCourseVideo')->name('instructor.courses.video.update');
+    Route::post('instructor/course/goal/update','updateCourseGoal')->name('instructor.courses.goal.update');
+    Route::get('instructor/course/{id}/delete','delete')->name('instructor.courses.delete');
+});
 });
