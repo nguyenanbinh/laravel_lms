@@ -48,6 +48,7 @@
                             <td>
                                 <a href="{{ route('instructor.courses.edit',$item->id) }}" class="btn btn-info px-5">Edit </a>
                                 <a href="{{ route('instructor.courses.delete',$item->id) }}" class="btn btn-danger px-5" id="delete">Delete </a>
+                                <a href="{{ route('instructor.courses.lecture.create',$item->id) }}" class="btn btn-warning" title="Lecture"><i class="lni lni-list"></i> </a>
                             </td>
                         </tr>
                         @endforeach
