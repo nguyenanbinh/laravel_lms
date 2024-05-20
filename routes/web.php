@@ -42,20 +42,20 @@ Route::middleware(['auth', 'roles:admin'])->group(function () {
         Route::post('/categories/store', 'store')->name('categories.store');
         Route::get('/categories/{id}/edit', 'edit')->name('categories.edit');
         Route::post('/categories/update', 'update')->name('categories.update');
-        Route::get('/categories//{id}/delete','delete')->name('categories.delete');
+        Route::get('/categories//{id}/delete', 'delete')->name('categories.delete');
         // Subcategory
-        Route::get('subcategories','allSubCategory')->name('subcategories.index');
-        Route::get('subcategories/create','createSubCategory')->name('subcategories.create');
-        Route::post('subcategories/store','storeSubCategory')->name('subcategories.store');
-        Route::get('subcategories/{id}/edit','editSubCategory')->name('subcategories.edit');
-        Route::post('subcategories/update','updateSubCategory')->name('subcategories.update');
-        Route::get('subcategories/{id}/delete','deleteSubCategory')->name('subcategories.delete');
+        Route::get('subcategories', 'allSubCategory')->name('subcategories.index');
+        Route::get('subcategories/create', 'createSubCategory')->name('subcategories.create');
+        Route::post('subcategories/store', 'storeSubCategory')->name('subcategories.store');
+        Route::get('subcategories/{id}/edit', 'editSubCategory')->name('subcategories.edit');
+        Route::post('subcategories/update', 'updateSubCategory')->name('subcategories.update');
+        Route::get('subcategories/{id}/delete', 'deleteSubCategory')->name('subcategories.delete');
     });
 
     // Instructor All Route
-    Route::controller(AdminController::class)->group(function(){
-        Route::get('instructors','getInstructors')->name('instructor.index');
-        Route::post('/update/user/status','updateUserStatus')->name('update.user.status');
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('instructors', 'getInstructors')->name('instructor.index');
+        Route::post('/update/user/status', 'updateUserStatus')->name('update.user.status');
     });
 });
 
@@ -74,16 +74,27 @@ Route::middleware(['auth', 'roles:instructor'])->group(function () {
     Route::post('/instructor/password/update', [InstructorController::class, 'updatePassword'])->name('instructor.password.update');
 
     // Instructor All Route
-Route::controller(CourseController::class)->group(function(){
-    Route::get('instructor/courses', 'index')->name('instructor.courses.index');
-    Route::get('instructor/courses/create', 'create')->name('instructor.courses.create');
-    Route::get('subcategory/ajax/{category_id}','getSubCategory');
-    Route::post('instructor/course/store','store')->name('instructor.courses.store');
-    Route::get('instructor/course/{id}/edit','edit')->name('instructor.courses.edit');
-    Route::post('instructor/course/update','update')->name('instructor.courses.update');
-    Route::post('instructor/course/image/update','updateCourseImage')->name('instructor.courses.image.update');
-    Route::post('instructor/course/video/update','updateCourseVideo')->name('instructor.courses.video.update');
-    Route::post('instructor/course/goal/update','updateCourseGoal')->name('instructor.courses.goal.update');
-    Route::get('instructor/course/{id}/delete','delete')->name('instructor.courses.delete');
-});
+    Route::controller(CourseController::class)->group(function () {
+        Route::get('instructor/courses', 'index')->name('instructor.courses.index');
+        Route::get('instructor/courses/create', 'create')->name('instructor.courses.create');
+        Route::get('subcategory/ajax/{category_id}', 'getSubCategory');
+        Route::post('instructor/course/store', 'store')->name('instructor.courses.store');
+        Route::get('instructor/course/{id}/edit', 'edit')->name('instructor.courses.edit');
+        Route::post('instructor/course/update', 'update')->name('instructor.courses.update');
+        Route::post('instructor/course/image/update', 'updateCourseImage')->name('instructor.courses.image.update');
+        Route::post('instructor/course/video/update', 'updateCourseVideo')->name('instructor.courses.video.update');
+        Route::post('instructor/course/goal/update', 'updateCourseGoal')->name('instructor.courses.goal.update');
+        Route::get('instructor/course/{id}/delete', 'delete')->name('instructor.courses.delete');
+
+        // Course Section and Lecture All Route
+        Route::controller(CourseController::class)->group(function () {
+            Route::get('/instructor/course/lecture/{id}/create', 'createCourseLecture')->name('instructor.courses.lecture.create');
+            Route::post('/instructor/course/section/store','storeCourseSection')->name('instructor.courses.section.store');
+            Route::post('/save-lecture','saveLecture')->name('save-lecture');
+            Route::get('/instructor/course/lecture/{id}/edit','editLecture')->name('instructor.courses.lecture.edit');
+            Route::post('/instructor/course/lecture/update','updateCourseLecture')->name('instructor.courses.lecture.update');
+            Route::get('/instructor/course/lecture/{id}','deleteLecture')->name('instructor.courses.lecture.delete');
+            Route::post('/instructor/course/section/{id}/delete','deleteSection')->name('instructor.courses.section.delete');
+        });
+    });
 });
