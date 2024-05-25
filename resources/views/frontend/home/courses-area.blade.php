@@ -37,7 +37,7 @@ $categories = App\Models\Category::orderBy('category_name')->get();
                             <div class="card card-item card-preview"
                                 data-tooltip-content="#tooltip_content_1{{ $course->id }}">
                                 <div class="card-image">
-                                    <a href="course-details.html" class="d-block">
+                                    <a href="{{ url('course/details/'.$course->id.'/'.$course->course_name_slug) }}" class="d-block">
                                         <img class="card-img-top lazy" src="{{ asset($course->course_image) }}"
                                             data-src="images/img8.jpg" alt="Card image cap">
                                     </a>
@@ -56,7 +56,7 @@ $categories = App\Models\Category::orderBy('category_name')->get();
                                 </div><!-- end card-image -->
                                 <div class="card-body">
                                     <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">{{ $course->label }}</h6>
-                                    <h5 class="card-title"><a href="course-details.html">{{ $course->course_name }}</a>
+                                    <h5 class="card-title"><a href="{{ url('course/details/'.$course->id.'/'.$course->course_name_slug) }}">{{ $course->course_name }}</a>
                                     </h5>
                                     <p class="card-text"><a href=" ">{{ $course['user']['name'] }}</a></p>
                                     <div class="rating-wrap d-flex align-items-center py-2">
@@ -105,7 +105,7 @@ $categories = App\Models\Category::orderBy('category_name')->get();
                                 </div><!-- end card-image -->
                                 <div class="card-body">
                                     <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">{{ $course->label }}</h6>
-                                    <h5 class="card-title"><a href="course-details.html">{{ $course->course_name }}</a>
+                                    <h5 class="card-title"><a href="{{ url('course/details/'.$course->id.'/'.$course->course_name_slug) }}">{{ $course->course_name }}</a>
                                     </h5>
                                     <p class="card-text"><a href=" ">{{ $course['user']['name'] }}</a></p>
                                     <div class="rating-wrap d-flex align-items-center py-2">
@@ -166,7 +166,7 @@ $courseData = App\Models\Course::get();
         <div class="card card-item">
             <div class="card-body">
                 <p class="card-text pb-2">By <a href="teacher-detail.html">{{ $item['user']['name'] }}</a></p>
-                <h5 class="card-title pb-1"><a href="course-details.html"> {{ $item->course_name }}</a></h5>
+                <h5 class="card-title pb-1"><a href="{{ url('course/details/'.$course->id.'/'.$course->course_name_slug) }}"> {{ $item->course_name }}</a></h5>
                 <div class="d-flex align-items-center pb-1">
                     @if ($item->bestseller == 1)
                     <h6 class="ribbon fs-14 mr-2">Bestseller</h6>

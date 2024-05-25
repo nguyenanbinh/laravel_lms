@@ -206,7 +206,7 @@
                             <nav class="main-menu">
                                 <ul>
                                     <li>
-                                        <a href="#">Home </a>
+                                        <a href="{{ route('index') }}">Home </a>
                                     </li>
                                     <li>
                                         <a href="#">courses <i class="la la-angle-down fs-12"></i></a>

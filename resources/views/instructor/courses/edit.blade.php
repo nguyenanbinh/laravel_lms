@@ -25,6 +25,8 @@
             <form id="myForm" action="{{ route('instructor.courses.update') }}" method="post" class="row g-3" enctype="multipart/form-data">
                 @csrf
 
+                <input type="hidden" name="course_id" value="{{ $course->id }}">
+                
                 <div class="form-group col-md-6">
                     <label for="input1" class="form-label">Course Name</label>
                     <input type="text" name="course_name" class="form-control" id="input1" value="{{ $course->course_name }}" >
@@ -73,7 +75,7 @@
                 <label for="input1" class="form-label">Course Label </label>
                 <select name="label" class="form-select mb-3" aria-label="Default select example">
                <option selected="" disabled>Open this select menu</option>
-                    <option value="Begginer" {{ $course->label == 'Begginer' ? 'selected' : '' }}>Begginer</option>
+                    <option value="Beginner" {{ $course->label == 'Beginner' ? 'selected' : '' }}>Beginner</option>
                     <option value="Middle" {{ $course->label == 'Middle' ? 'selected' : '' }}>Middle</option>
                     <option value="Advance" {{ $course->label == 'Advance' ? 'selected' : '' }}>Advance</option>
                 </select>

@@ -159,9 +159,9 @@ class CourseController extends Controller
      * @param int $courseId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, int $courseId): \Illuminate\Http\RedirectResponse
+    public function update(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $course = Course::findOrFail($courseId);
+        $course = Course::find($request->course_id);
 
         $course->update([
             'category_id' => $request->category_id,
@@ -187,7 +187,7 @@ class CourseController extends Controller
             'alert-type' => 'success',
         ];
 
-        return redirect()->route('all.course')->with($notification);
+        return redirect()->route('instructor.courses.index')->with($notification);
     }
 
     public function delete($id){
