@@ -102,5 +102,6 @@ Route::middleware(['auth', 'roles:instructor'])->group(function () {
 
 ///// Route Accessable for All
 Route::get('/course/details/{id}/{slug}', [IndexController::class, 'courseDetails']);
-
+Route::get('/category/{id}/{slug}', [IndexController::class, 'categoryCourse']);
+Route::get('/subcategory/{id}/{slug}', [IndexController::class, 'subCategoryCourse']);
 ///// End Route Accessable for All
