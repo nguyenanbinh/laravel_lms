@@ -80,7 +80,7 @@ $categories = App\Models\Category::orderBy('category_name')->get();
                                                 }}</span></p>
                                         @endif
                                         <div class="icon-element icon-element-sm shadow-sm cursor-pointer"
-                                            title="Add to Wishlist"><i class="la la-heart-o"></i></div>
+                                            title="Add to Wishlist"  id="{{ $course->id }}" onclick="addToWishList(this.id)"><i class="la la-heart-o"></i></div>
                                     </div>
                                 </div><!-- end card-body -->
                             </div><!-- end card -->

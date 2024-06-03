@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\Backend\InstructorController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\WishListController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/logout', [UserController::class, 'logout'])->name('user.logout');
     Route::get('/user/change/password', [UserController::class, 'changePassword'])->name('user.change.password');
     Route::post('/user/password/update', [UserController::class, 'updatePassword'])->name('user.password.update');
+
+    // User Wishlist All Route
+    Route::controller(WishListController::class)->group(function () {
+        Route::get('/user/wishlist', 'getWishlist')->name('user.wishlist');
+        Route::get('/get-wishlist-course','getWishlistCourse');
+        Route::get('/wishlist-remove/{id}','removeWishlist');
+    });
 });
 
 require __DIR__ . '/auth.php';
@@ -90,12 +98,12 @@ Route::middleware(['auth', 'roles:instructor'])->group(function () {
         // Course Section and Lecture All Route
         Route::controller(CourseController::class)->group(function () {
             Route::get('/instructor/course/lecture/{id}/create', 'createCourseLecture')->name('instructor.courses.lecture.create');
-            Route::post('/instructor/course/section/store','storeCourseSection')->name('instructor.courses.section.store');
-            Route::post('/save-lecture','saveLecture')->name('save-lecture');
-            Route::get('/instructor/course/lecture/{id}/edit','editLecture')->name('instructor.courses.lecture.edit');
-            Route::post('/instructor/course/lecture/update','updateCourseLecture')->name('instructor.courses.lecture.update');
-            Route::get('/instructor/course/lecture/{id}','deleteLecture')->name('instructor.courses.lecture.delete');
-            Route::post('/instructor/course/section/{id}/delete','deleteSection')->name('instructor.courses.section.delete');
+            Route::post('/instructor/course/section/store', 'storeCourseSection')->name('instructor.courses.section.store');
+            Route::post('/save-lecture', 'saveLecture')->name('save-lecture');
+            Route::get('/instructor/course/lecture/{id}/edit', 'editLecture')->name('instructor.courses.lecture.edit');
+            Route::post('/instructor/course/lecture/update', 'updateCourseLecture')->name('instructor.courses.lecture.update');
+            Route::get('/instructor/course/lecture/{id}', 'deleteLecture')->name('instructor.courses.lecture.delete');
+            Route::post('/instructor/course/section/{id}/delete', 'deleteSection')->name('instructor.courses.section.delete');
         });
     });
 });
@@ -105,4 +113,7 @@ Route::get('/course/details/{id}/{slug}', [IndexController::class, 'courseDetail
 Route::get('/category/{id}/{slug}', [IndexController::class, 'categoryCourse']);
 Route::get('/subcategory/{id}/{slug}', [IndexController::class, 'subCategoryCourse']);
 Route::get('/instructor/details/{id}', [IndexController::class, 'instructorDetails'])->name('instructor.details');
+
+Route::post('/add-to-wishlist/{course_id}', [WishListController::class, 'addToWishList']);
+
 ///// End Route Accessable for All
