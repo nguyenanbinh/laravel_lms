@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\Backend\InstructorController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\WishListController;
 use App\Http\Controllers\ProfileController;
@@ -116,4 +117,15 @@ Route::get('/instructor/details/{id}', [IndexController::class, 'instructorDetai
 
 Route::post('/add-to-wishlist/{course_id}', [WishListController::class, 'addToWishList']);
 
+Route::post('/cart/data/store/{id}', [CartController::class, 'addToCart']);
+
+// Get Data from Minicart
+Route::get('/mini-cart/course/remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
+
+// Cart All Route
+Route::controller(CartController::class)->group(function(){
+    Route::get('/mycart','myCart')->name('mycart');
+    Route::get('/cart/data', 'cartData');
+    Route::get('/cart-remove/{rowId}','cartRemove');
+});
 ///// End Route Accessable for All
