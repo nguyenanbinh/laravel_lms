@@ -16,6 +16,7 @@
                   toast: true,
                   position: 'top-end',
                   showConfirmButton: false,
+                  showCloseButton: true,
                   timer: 6000
             })
             if ($.isEmptyObject(data.error)) {
@@ -82,7 +83,7 @@
         </div><!-- end col-lg-4 -->
                     `
                 })
-                $('#wishlist').html(rows);
+                $('#wishlist').html(rows)
             },
             error: function (xhr, status, errors) {
                 console.log(xhr)
@@ -107,6 +108,7 @@
                   toast: true,
                   position: 'top-end',
                   showConfirmButton: false,
+                  showCloseButton: true,
                   timer: 6000
             })
             if ($.isEmptyObject(data.error)) {
@@ -132,3 +134,209 @@
     /// End WishList Remove //
 </script>
 {{-- /// End Load Wishlist Data // --}}
+
+{{-- /// Start Add To Cart // --}}
+<script type="text/javascript">
+    function addToCart(courseId, courseName, instructorId, slug){
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            data: {
+                _token: '{{ csrf_token() }}',
+                course_name: courseName,
+                course_name_slug: slug,
+                instructor: instructorId
+            },
+            url: "/cart/data/store/"+ courseId,
+            success: function(data) {
+                miniCart()
+                 // Start Message
+                 const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  showCloseButton: true,
+                  timer: 6000
+            })
+            if ($.isEmptyObject(data.error)) {
+
+                    Toast.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: data.success,
+                    })
+            } else {
+
+           Toast.fire({
+                    type: 'error',
+                    icon: 'error',
+                    title: data.error,
+                    })
+                }
+              // End Message
+            }
+        })
+    }
+</script>
+{{-- /// End Add To Cart // --}}
+
+{{-- /// Start Mini Cart // --}}
+<script type="text/javascript">
+    function miniCart(){
+        $.ajax({
+            type: 'GET',
+            url: '/cart/data',
+            dataType: 'json',
+            success:function(response){
+                $('span[id="cartSubTotal"]').text(response.cartTotal)
+                $('#cartQty').text(response.cartQty)
+
+                let miniCart = ""
+                $.each(response.carts, function(key,value){
+                    miniCart += `<li class="media media-card">
+                            <a href="shopping-cart.html" class="media-img">
+                                <img src="/${value.options.image}" alt="Cart image">
+                            </a>
+                            <div class="media-body">
+                                <h5><a href="/course/details/${value.id}/${value.options.slug}"> ${value.name}</a></h5>
+
+                                <span class="d-block fs-14">$${value.price}</span>
+                                 <a type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)"><i class="la la-times"></i> </a>
+                            </div>
+                        </li>
+                        `
+                })
+                $('#miniCart').html(miniCart)
+            }
+        })
+    }
+    miniCart()
+
+    // Mini Cart Remove Start
+    function miniCartRemove(rowId){
+        $.ajax({
+            type: 'GET',
+            url: '/mini-cart/course/remove/'+rowId,
+            dataType: 'json',
+            success:function(data){
+            miniCart()
+            // Start Message
+            const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  showCloseButton: true,
+                  timer: 3000
+            })
+            if ($.isEmptyObject(data.error)) {
+
+                    Toast.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: data.success,
+                    })
+            }else{
+
+           Toast.fire({
+                    type: 'error',
+                    icon: 'error',
+                    title: data.error,
+                    })
+                }
+              // End Message
+            }
+        })
+    }
+    // End Mini Cart Remove
+
+</script>
+{{-- /// End Mini Cart // --}}
+
+ {{-- /// Start MyCart  // --}}
+ <script type="text/javascript">
+    function cart(){
+        $.ajax({
+            type: 'GET',
+            url: '/cart/data',
+            dataType: 'json',
+            success:function(response){
+                $('span[id="cartSubTotal"]').text(response.cartTotal);
+                let rows = ""
+                $.each(response.carts, function(key, value){
+                    rows += `
+                    <tr>
+                    <th scope="row">
+                        <div class="media media-card">
+                            <a href="course-details.html" class="media-img mr-0">
+                                <img src="/${value.options.image}" alt="Cart image">
+                            </a>
+                        </div>
+                    </th>
+                    <td>
+                        <a href="/course/details/${value.id}/${value.options.slug}" class="text-black font-weight-semi-bold">${value.name}</a>
+                    </td>
+                    <td>
+                        <ul class="generic-list-item font-weight-semi-bold">
+                            <li class="text-black lh-18">$${value.price}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <button type="button" class="icon-element icon-element-xs shadow-sm border-0" data-toggle="tooltip" data-placement="top" id="${value.rowId}" onclick="cartRemove(this.id)">
+                            <i class="la la-times"></i>
+                        </button>
+                    </td>
+                </tr>
+                `
+                });
+                console.log(rows.length);
+                let emptyCourse = '<td colspan="4"><h5 class="text-center">Cart is empty</h5></td>';
+                if(!rows) {
+                    $('#cartPage').html(emptyCourse);
+                } else {
+                    $('#cartPage').html(rows);
+                }
+            }
+        })
+    }
+
+    cart();
+
+    // My Cart Remove Start
+    function cartRemove(rowId){
+        $.ajax({
+            type: 'GET',
+            url: '/cart-remove/'+rowId,
+            dataType: 'json',
+            success:function(data){
+            miniCart();
+            cart();
+        // Start Message
+        const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  showCloseButton: true,
+                  timer: 3000
+            })
+            if ($.isEmptyObject(data.error)) {
+
+                    Toast.fire({
+                    type: 'success',
+                    icon: 'success',
+                    title: data.success,
+                    })
+            }else{
+
+           Toast.fire({
+                    type: 'error',
+                    icon: 'error',
+                    title: data.error,
+                    })
+                }
+              // End Message
+            }
+        })
+    }
+    // End My Cart Remove
+</script>
+{{-- /// End MyCart // --}}
