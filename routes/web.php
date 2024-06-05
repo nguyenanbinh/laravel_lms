@@ -150,5 +150,9 @@ Route::controller(CartController::class)->group(function () {
 Route::post('/coupon-apply', [CartController::class, 'couponApply']);
 Route::get('/coupon-calculation', [CartController::class, 'couponCalculation']);
 Route::get('/coupon-remove', [CartController::class, 'couponRemove']);
+
+/// Checkout Page Route
+Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::post('/payment', [CartController::class, 'payment'])->name('payment');
 ///// End Route Accessable for All
 
