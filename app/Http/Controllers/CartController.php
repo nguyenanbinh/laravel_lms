@@ -230,6 +230,7 @@ class CartController extends Controller
      */
     public function payment(Request $request)
     {
+        // dd(Cart::total());
         // Calculate the total amount based on the coupon if present
         if (Session::has('coupon')) {
             $total_amount = Session::get('coupon')['total_amount'];
