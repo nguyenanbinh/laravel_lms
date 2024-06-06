@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\Backend\InstructorController;
+use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Frontend\IndexController;
@@ -67,23 +68,28 @@ Route::middleware(['auth', 'roles:admin'])->group(function () {
     Route::controller(AdminController::class)->group(function () {
         Route::get('instructors', 'getInstructors')->name('instructor.index');
         Route::post('/update/user/status', 'updateUserStatus')->name('update.user.status');
-        Route::get('/admin/course/details/{id}','adminCourseDetails')->name('admin.course.details');
+        Route::get('/admin/course/details/{id}', 'adminCourseDetails')->name('admin.course.details');
     });
 
     // Admin Coruses All Route
     Route::controller(AdminController::class)->group(function () {
         Route::get('/admin/all/course', 'adminAllCourse')->name('admin.all.course');
-        Route::post('/update/course/status','UpdateCourseStatus')->name('update.course.status');
+        Route::post('/update/course/status', 'UpdateCourseStatus')->name('update.course.status');
     });
 
     // Admin Coupon All Route
-    Route::controller(CouponController::class)->group(function(){
-        Route::get('/admin/all/coupon','AdminAllCoupon')->name('admin.all.coupon');
-        Route::get('/admin/add/coupon','AdminAddCoupon')->name('admin.add.coupon');
-        Route::post('/admin/store/coupon','AdminStoreCoupon')->name('admin.store.coupon');
-        Route::get('/admin/edit/coupon/{id}','AdminEditCoupon')->name('admin.edit.coupon');
-        Route::post('/admin/update/coupon','AdminUpdateCoupon')->name('admin.update.coupon');
-        Route::get('/admin/delete/coupon/{id}','AdminDeleteCoupon')->name('admin.delete.coupon');
+    Route::controller(CouponController::class)->group(function () {
+        Route::get('/admin/all/coupon', 'AdminAllCoupon')->name('admin.all.coupon');
+        Route::get('/admin/add/coupon', 'AdminAddCoupon')->name('admin.add.coupon');
+        Route::post('/admin/store/coupon', 'AdminStoreCoupon')->name('admin.store.coupon');
+        Route::get('/admin/edit/coupon/{id}', 'AdminEditCoupon')->name('admin.edit.coupon');
+        Route::post('/admin/update/coupon', 'AdminUpdateCoupon')->name('admin.update.coupon');
+        Route::get('/admin/delete/coupon/{id}', 'AdminDeleteCoupon')->name('admin.delete.coupon');
+    });
+    // Setting All Route
+    Route::controller(SettingController::class)->group(function () {
+        Route::get('/smtp/setting', 'smtpSetting')->name('smtp.setting');
+        Route::post('/update/smtp','smtpUpdate')->name('update.smtp');
     });
 });
 
@@ -155,4 +161,3 @@ Route::get('/coupon-remove', [CartController::class, 'couponRemove']);
 Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
 Route::post('/payment', [CartController::class, 'payment'])->name('payment');
 ///// End Route Accessable for All
-
