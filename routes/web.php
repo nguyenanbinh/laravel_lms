@@ -96,9 +96,9 @@ Route::middleware(['auth', 'roles:admin'])->group(function () {
     // Admin All Order Route
     Route::controller(OrderController::class)->group(function () {
         Route::get('/admin/pending/order', 'adminPendingOrder')->name('admin.pending.order');
-        Route::get('/admin/order/details/{id}','adminOrderDetails')->name('admin.order.details');
-        Route::get('/pending-confirm/{id}','pendingToConfirm')->name('pending-confirm');
-        Route::get('/admin/confirm/order','adminConfirmOrder')->name('admin.confirm.order');
+        Route::get('/admin/order/details/{id}', 'adminOrderDetails')->name('admin.order.details');
+        Route::get('/pending-confirm/{id}', 'pendingToConfirm')->name('pending-confirm');
+        Route::get('/admin/confirm/order', 'adminConfirmOrder')->name('admin.confirm.order');
     });
 });
 
@@ -128,17 +128,24 @@ Route::middleware(['auth', 'roles:instructor'])->group(function () {
         Route::post('instructor/course/video/update', 'updateCourseVideo')->name('instructor.courses.video.update');
         Route::post('instructor/course/goal/update', 'updateCourseGoal')->name('instructor.courses.goal.update');
         Route::get('instructor/course/{id}/delete', 'delete')->name('instructor.courses.delete');
+    });
 
-        // Course Section and Lecture All Route
-        Route::controller(CourseController::class)->group(function () {
-            Route::get('/instructor/course/lecture/{id}/create', 'createCourseLecture')->name('instructor.courses.lecture.create');
-            Route::post('/instructor/course/section/store', 'storeCourseSection')->name('instructor.courses.section.store');
-            Route::post('/save-lecture', 'saveLecture')->name('save-lecture');
-            Route::get('/instructor/course/lecture/{id}/edit', 'editLecture')->name('instructor.courses.lecture.edit');
-            Route::post('/instructor/course/lecture/update', 'updateCourseLecture')->name('instructor.courses.lecture.update');
-            Route::get('/instructor/course/lecture/{id}', 'deleteLecture')->name('instructor.courses.lecture.delete');
-            Route::post('/instructor/course/section/{id}/delete', 'deleteSection')->name('instructor.courses.section.delete');
-        });
+    // Course Section and Lecture All Route
+    Route::controller(CourseController::class)->group(function () {
+        Route::get('/instructor/course/lecture/{id}/create', 'createCourseLecture')->name('instructor.courses.lecture.create');
+        Route::post('/instructor/course/section/store', 'storeCourseSection')->name('instructor.courses.section.store');
+        Route::post('/save-lecture', 'saveLecture')->name('save-lecture');
+        Route::get('/instructor/course/lecture/{id}/edit', 'editLecture')->name('instructor.courses.lecture.edit');
+        Route::post('/instructor/course/lecture/update', 'updateCourseLecture')->name('instructor.courses.lecture.update');
+        Route::get('/instructor/course/lecture/{id}', 'deleteLecture')->name('instructor.courses.lecture.delete');
+        Route::post('/instructor/course/section/{id}/delete', 'deleteSection')->name('instructor.courses.section.delete');
+    });
+
+    // Admin All Order Route
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/instructor/all/order', 'instructorAllOrder')->name('instructor.all.order');
+        Route::get('/instructor/order/details/{payment_id}','instructorOrderDetails')->name('instructor.order.details');
+        Route::get('/instructor/order/invoice/{payment_id}','InstructorOrderInvoice')->name('instructor.order.invoice');
     });
 });
 
