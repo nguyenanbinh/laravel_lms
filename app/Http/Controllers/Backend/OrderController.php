@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Payment;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -41,4 +43,37 @@ class OrderController extends Controller
         return view('admin.backend.orders.confirm_orders',compact('payment'));
 
     } // End Method
+
+    public function instructorAllOrder(){
+
+        $id = auth()->user()->id;
+        $orderItem = Order::where('instructor_id',$id)->orderBy('id','desc')->get();
+
+        return view('instructor.orders.all_orders',compact('orderItem'));
+
+    }// End Method
+
+    public function instructorOrderDetails($payment_id){
+
+        $payment = Payment::where('id',$payment_id)->first();
+        $orderItem = Order::where('payment_id',$payment_id)->orderBy('id','DESC')->get();
+
+        return view('instructor.orders.instructor_order_details',compact('payment','orderItem'));
+
+    }// End Method
+
+    public function instructorOrderInvoice($payment_id){
+
+        $payment = Payment::where('id',$payment_id)->first();
+        $orderItem = Order::where('payment_id',$payment_id)->orderBy('id','DESC')->get();
+
+        $pdf = Pdf::loadView('instructor.orders.order_pdf',compact('payment','orderItem'))->setPaper('a4')->setOption([
+            'tempDir' => public_path(),
+            'chroot' => public_path(),
+        ]);
+
+        $nameInvoice = "invoice_{$payment->invoice_no}.pdf";
+        return $pdf->download($nameInvoice);
+
+    }// End Method
 }
