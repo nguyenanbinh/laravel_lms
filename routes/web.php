@@ -33,6 +33,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/get-wishlist-course', 'getWishlistCourse');
         Route::get('/wishlist-remove/{id}', 'removeWishlist');
     });
+
+        // User My Course All Route
+        Route::controller(OrderController::class)->group(function(){
+            Route::get('/my-course','myCourse')->name('my-course');
+            Route::get('/course/view/{course_id}','courseView')->name('course.view');
+
+        });
 });
 
 require __DIR__ . '/auth.php';
