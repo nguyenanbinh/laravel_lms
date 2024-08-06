@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseSection;
 use App\Models\Order;
 use App\Models\Payment;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -74,6 +75,25 @@ class OrderController extends Controller
 
         $nameInvoice = "invoice_{$payment->invoice_no}.pdf";
         return $pdf->download($nameInvoice);
+
+    }// End Method
+
+    public function myCourse(){
+        $id = auth()->user()->id;
+        $myCourse = Order::where('user_id', $id)->orderBy('id','DESC')->get();
+
+        return view('frontend.mycourse.my_all_course',compact('myCourse'));
+
+    }// End Method
+
+    public function courseView($course_id){
+        $id = auth()->user()->id;
+
+        $course = Order::where('course_id',$course_id)->where('user_id',$id)->first();
+        $section = CourseSection::where('course_id', $course_id)->orderBy('id','asc')->get();
+
+        return view('frontend.mycourse.course_view',compact('course', 'section'));
+
 
     }// End Method
 }
